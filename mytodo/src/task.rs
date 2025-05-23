@@ -3,13 +3,13 @@ use anyhow::{Result, bail};
 use std::fs;
 use std::path::Path;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize)]
 pub struct Task {
     pub description: String,
     pub done: bool,
 }
 
-#[derive(Serialize, Deserialize, Default, Debug)]
+#[derive(Serialize, Deserialize, Default)]
 pub struct TaskList {
     pub tasks: Vec<Task>,
 }
