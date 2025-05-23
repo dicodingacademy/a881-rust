@@ -1,0 +1,16 @@
+{
+  "tasks": [
+    {
+      "description": "Belajar Rust",
+      "done": false
+    },
+    {
+      "description": "Belajar Kotlin",
+      "done": false
+    },
+    {
+      "description": "Belajar Bahasa",
+      "done": false
+    }
+  ]
+}
