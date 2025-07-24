@@ -79,7 +79,7 @@ mod tests {
         let _ = list.add("Belajar Rust".into());
         assert_eq!(list.tasks.iter().len(), 1);
         assert_eq!(list.tasks[0].description, "Belajar Rust");
-        assert!(!list.tasks[0].done);
+        assert_eq!(list.tasks[0].done, false);
     }
 
     #[test]
@@ -88,7 +88,7 @@ mod tests {
         let _ = list.add("Belajar Rust".into());
         let msg = list.done(1).unwrap();
         assert_eq!(msg, "Tugas 1 ditandai selesai.");
-        assert!(list.tasks[0].done);
+        assert_eq!(list.tasks[0].done, true);
     }
 
     #[test]
@@ -97,6 +97,6 @@ mod tests {
         let _ = list.add("Belajar Rust".into());
         let err_msg = list.done(10).unwrap_err();
         assert_eq!(err_msg.to_string(), "Nomor tugas 10 tidak ditemukan.");
-        assert!(!list.tasks[0].done);
+        assert_eq!(list.tasks[0].done, false);
     }
 }
