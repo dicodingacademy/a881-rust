@@ -2,7 +2,7 @@
   "tasks": [
     {
       "description": "Belajar Rust",
-      "done": false
+      "done": true
     },
     {
       "description": "Belajar Kotlin",
@@ -10,6 +10,10 @@
     },
     {
       "description": "Belajar Bahasa",
+      "done": true
+    },
+    {
+      "description": "cobain",
       "done": false
     }
   ]

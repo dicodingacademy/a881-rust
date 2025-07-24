@@ -15,6 +15,40 @@ pub struct TaskList {
 }
 
 impl TaskList {
+	pub fn add(&mut self, desc: String) -> Result<String> {
+        self.tasks.push(Task { description: desc, done: false });
+        Ok("Tugas baru ditambahkan.".to_string())
+    }
+
+    pub fn done(&mut self, id: usize) -> Result<String> {
+        if id == 0 || id > self.tasks.len() {
+            bail!("Nomor tugas {} tidak ditemukan", id);
+        }
+        self.tasks[id - 1].done = true;
+        Ok(format!("Tugas {} ditandai selesai.", id))
+    }
+
+    pub fn remove(&mut self, id: usize) -> Result<String> {
+        if id == 0 || id > self.tasks.len() {
+            bail!("Nomor tugas {} tidak ditemukan", id);
+        }
+        self.tasks.remove(id - 1);
+        Ok(format!("Tugas {} dihapus.", id))
+    }
+
+	pub fn print(&self) -> String {
+        if self.tasks.is_empty() {
+            return "(Belum ada tugas)".to_string();
+        }
+
+        let mut output = String::from("Daftar Tugas:");
+        for (i, task) in self.tasks.iter().enumerate() {
+            let status = if task.done { "[x]" } else { "[ ]" };
+            output.push_str(&format!("\n{}. {} {}", i + 1, status, task.description));
+        }
+		output
+    }
+
     const FILE_PATH: &'static str = "tasks.json";
 
     pub fn load() -> Result<Self> {
@@ -31,42 +65,6 @@ impl TaskList {
     pub fn save(&self) -> Result<()> {
         let data = serde_json::to_string_pretty(&self)?;
         fs::write(Self::FILE_PATH, data)?;
-        Ok(())
-    }
-
-    pub fn add(&mut self, desc: String) {
-        self.tasks.push(Task { description: desc, done: false });
-        println!("Tugas baru ditambahkan.");
-    }
-
-    pub fn print(&self) {
-        if self.tasks.is_empty() {
-            println!("(Belum ada tugas)");
-            return;
-        }
-
-        println!("Daftar Tugas:");
-        for (i, task) in self.tasks.iter().enumerate() {
-            let status = if task.done { "[x]" } else { "[ ]" };
-            println!("{}. {} {}", i + 1, status, task.description);
-        }
-    }
-
-    pub fn done(&mut self, id: usize) -> Result<()> {
-        if id == 0 || id > self.tasks.len() {
-            bail!("Nomor tugas {} tidak ditemukan", id);
-        }
-        self.tasks[id - 1].done = true;
-        println!("Tugas {} ditandai selesai.", id);
-        Ok(())
-    }
-
-    pub fn remove(&mut self, id: usize) -> Result<()> {
-        if id == 0 || id > self.tasks.len() {
-            bail!("Nomor tugas {} tidak ditemukan", id);
-        }
-        self.tasks.remove(id - 1);
-        println!("Tugas {} dihapus.", id);
         Ok(())
     }
 }
