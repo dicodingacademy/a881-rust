@@ -99,4 +99,23 @@ mod tests {
         assert_eq!(err_msg.to_string(), "Nomor tugas 10 tidak ditemukan.");
         assert_eq!(list.tasks[0].done, false);
     }
+
+    #[test]
+    fn test_remove_task_success() {
+        let mut list = TaskList::default();
+        let _ = list.add("Belajar Rust".into());
+        let msg = list.remove(1).unwrap();
+        assert_eq!(msg, "Tugas 1 dihapus.");
+        assert_eq!(list.tasks.is_empty(), true);
+    }
+
+    #[test]
+    fn test_remove_task_failed() {
+        let mut list = TaskList::default();
+        let _ = list.add("Belajar Rust".into());
+        let err_msg = list.remove(10).unwrap_err();
+        assert_eq!(err_msg.to_string(), "Nomor tugas 10 tidak ditemukan.");
+        assert_eq!(list.tasks.is_empty(), false);
+    }
+
 }
