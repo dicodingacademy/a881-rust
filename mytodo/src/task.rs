@@ -118,4 +118,18 @@ mod tests {
         assert_eq!(list.tasks.is_empty(), false);
     }
 
+    #[test]
+    fn test_print_empty() {
+        let list = TaskList::default();
+        assert_eq!(list.print(), "(Belum ada tugas)");
+    }
+
+    #[test]
+    fn test_print_tasks() {
+        let mut list = TaskList::default();
+        let _ = list.add("Belajar Rust".into());
+        let _ = list.add("Belajar Unit Test".into());
+        let output = list.print();
+        assert_eq!(output, "Daftar Tugas:\n1. [ ] Belajar Rust\n2. [ ] Belajar Unit Test");
+    }
 }
