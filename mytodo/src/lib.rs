@@ -33,7 +33,7 @@ pub fn run(cli: Cli) -> Result<()> {
             updated = true;
         }
         Commands::List => {
-            println!("{}", tasks.print());
+            println!("{}", tasks.print()?);
         }
         Commands::Done { id } => {
             println!("{}", tasks.done(id)?);

@@ -36,9 +36,9 @@ impl TaskList {
         Ok(format!("Tugas {} dihapus.", id))
     }
 
-	pub fn print(&self) -> String {
+	pub fn print(&self) -> Result<String> {
         if self.tasks.is_empty() {
-            return "(Belum ada tugas)".to_string();
+            return Ok("(Belum ada tugas)".to_string());
         }
 
         let mut output = String::from("Daftar Tugas:");
@@ -46,7 +46,7 @@ impl TaskList {
             let status = if task.done { "[x]" } else { "[ ]" };
             output.push_str(&format!("\n{}. {} {}", i + 1, status, task.description));
         }
-		output
+		Ok(output)
     }
 
     const FILE_PATH: &'static str = "tasks.json";
@@ -132,7 +132,7 @@ mod tests {
     fn test_print_empty() {
         let list = TaskList::default();
 
-        let output = list.print();
+        let output = list.print().unwrap();
         
         assert_eq!(output, "(Belum ada tugas)");
     }
@@ -143,8 +143,8 @@ mod tests {
         let _ = list.add("Belajar Rust".into());
         let _ = list.add("Belajar Unit Test".into());
 
-        let output = list.print();
-        
+        let output = list.print().unwrap();
+
         assert_eq!(output, "Daftar Tugas:\n1. [ ] Belajar Rust\n2. [ ] Belajar Unit Test");
     }
 }
