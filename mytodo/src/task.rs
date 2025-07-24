@@ -22,7 +22,7 @@ impl TaskList {
 
     pub fn done(&mut self, id: usize) -> Result<String> {
         if id == 0 || id > self.tasks.len() {
-            bail!("Nomor tugas {} tidak ditemukan", id);
+            bail!("Nomor tugas {} tidak ditemukan.", id);
         }
         self.tasks[id - 1].done = true;
         Ok(format!("Tugas {} ditandai selesai.", id))
@@ -30,7 +30,7 @@ impl TaskList {
 
     pub fn remove(&mut self, id: usize) -> Result<String> {
         if id == 0 || id > self.tasks.len() {
-            bail!("Nomor tugas {} tidak ditemukan", id);
+            bail!("Nomor tugas {} tidak ditemukan.", id);
         }
         self.tasks.remove(id - 1);
         Ok(format!("Tugas {} dihapus.", id))
@@ -79,6 +79,24 @@ mod tests {
         let _ = list.add("Belajar Rust".into());
         assert_eq!(list.tasks.iter().len(), 1);
         assert_eq!(list.tasks[0].description, "Belajar Rust");
+        assert!(!list.tasks[0].done);
+    }
+
+    #[test]
+    fn test_done_task_success() {
+        let mut list = TaskList::default();
+        let _ = list.add("Belajar Rust".into());
+        let msg = list.done(1).unwrap();
+        assert_eq!(msg, "Tugas 1 ditandai selesai.");
+        assert!(list.tasks[0].done);
+    }
+
+    #[test]
+    fn test_done_task_failed() {
+        let mut list = TaskList::default();
+        let _ = list.add("Belajar Rust".into());
+        let err_msg = list.done(10).unwrap_err();
+        assert_eq!(err_msg.to_string(), "Nomor tugas 10 tidak ditemukan.");
         assert!(!list.tasks[0].done);
     }
 }
