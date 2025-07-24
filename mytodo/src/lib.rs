@@ -29,18 +29,18 @@ pub fn run(cli: Cli) -> Result<()> {
 
     match cli.command {
         Commands::Add { description } => {
-            tasks.add(description);
+            println!("{}", tasks.add(description)?);
             updated = true;
         }
         Commands::List => {
-            tasks.print();
+            println!("{}", tasks.print()?);
         }
         Commands::Done { id } => {
-            tasks.done(id)?;
+            println!("{}", tasks.done(id)?);
             updated = true;
         }
         Commands::Remove { id } => {
-            tasks.remove(id)?;
+            println!("{}", tasks.remove(id)?);
             updated = true;
         }
     }
