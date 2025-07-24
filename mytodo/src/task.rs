@@ -68,3 +68,17 @@ impl TaskList {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_add_task() {
+        let mut list = TaskList::default();
+        let _ = list.add("Belajar Rust".into());
+        assert_eq!(list.tasks.iter().len(), 1);
+        assert_eq!(list.tasks[0].description, "Belajar Rust");
+        assert!(!list.tasks[0].done);
+    }
+}
