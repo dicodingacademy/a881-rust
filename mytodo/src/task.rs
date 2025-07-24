@@ -76,7 +76,9 @@ mod tests {
     #[test]
     fn test_add_task() {
         let mut list = TaskList::default();
+
         let _ = list.add("Belajar Rust".into());
+
         assert_eq!(list.tasks.iter().len(), 1);
         assert_eq!(list.tasks[0].description, "Belajar Rust");
         assert_eq!(list.tasks[0].done, false);
@@ -86,7 +88,9 @@ mod tests {
     fn test_done_task_success() {
         let mut list = TaskList::default();
         let _ = list.add("Belajar Rust".into());
+
         let msg = list.done(1).unwrap();
+
         assert_eq!(msg, "Tugas 1 ditandai selesai.");
         assert_eq!(list.tasks[0].done, true);
     }
@@ -95,7 +99,9 @@ mod tests {
     fn test_done_task_failed() {
         let mut list = TaskList::default();
         let _ = list.add("Belajar Rust".into());
+
         let err_msg = list.done(10).unwrap_err();
+
         assert_eq!(err_msg.to_string(), "Nomor tugas 10 tidak ditemukan.");
         assert_eq!(list.tasks[0].done, false);
     }
@@ -104,7 +110,9 @@ mod tests {
     fn test_remove_task_success() {
         let mut list = TaskList::default();
         let _ = list.add("Belajar Rust".into());
+
         let msg = list.remove(1).unwrap();
+
         assert_eq!(msg, "Tugas 1 dihapus.");
         assert_eq!(list.tasks.is_empty(), true);
     }
@@ -113,7 +121,9 @@ mod tests {
     fn test_remove_task_failed() {
         let mut list = TaskList::default();
         let _ = list.add("Belajar Rust".into());
+
         let err_msg = list.remove(10).unwrap_err();
+
         assert_eq!(err_msg.to_string(), "Nomor tugas 10 tidak ditemukan.");
         assert_eq!(list.tasks.is_empty(), false);
     }
@@ -121,7 +131,10 @@ mod tests {
     #[test]
     fn test_print_empty() {
         let list = TaskList::default();
-        assert_eq!(list.print(), "(Belum ada tugas)");
+
+        let output = list.print();
+        
+        assert_eq!(output, "(Belum ada tugas)");
     }
 
     #[test]
@@ -129,7 +142,9 @@ mod tests {
         let mut list = TaskList::default();
         let _ = list.add("Belajar Rust".into());
         let _ = list.add("Belajar Unit Test".into());
+
         let output = list.print();
+        
         assert_eq!(output, "Daftar Tugas:\n1. [ ] Belajar Rust\n2. [ ] Belajar Unit Test");
     }
 }
